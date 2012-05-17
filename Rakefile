@@ -15,7 +15,6 @@ PKG_DESTINATION = ENV["PKG_DESTINATION"] || "../#{PKG_NAME}"
 RELEASE_NAME  = "REL #{PKG_VERSION}"
 PKG_FILES = FileList[
   #'CHANGELOG',
-  #'LICENSE',
   'README.rdoc',
   #'TODO',
   'Rakefile',
@@ -23,27 +22,6 @@ PKG_FILES = FileList[
   'doc/**/*',
   'lib/**/*',
 ] - [ 'test' ]
-
-spec = Gem::Specification.new do |s|
-  s.name = 'rsaml'
-  s.version = PKG_VERSION
-  s.summary = "RSAML - SAML implementation in Ruby."
-  s.description = <<-EOF
-    An implementation of SAML in Ruby.
-  EOF
-
-  s.add_dependency('rake', '>= 0.7.1')
-  s.add_dependency('uuid', '>= 1.0.4')
-
-  s.rdoc_options << '--exclude' << '.'
-  s.has_rdoc = false
-
-  s.files = PKG_FILES.to_a.delete_if {|f| f.include?('.svn')}
-  s.require_path = 'lib'
-
-  s.author = "Anthony Eden"
-  s.email = "anthonyeden@gmail.com"
-end
 
 begin
   require 'jeweler'
@@ -55,11 +33,12 @@ begin
     ruby-friendly and documentation is provided for each class and method. In certain cases the SAML specification is 
     referenced directly and should be considered the final say whenever a question arises regarding SAML implementation.
     }
-    gemspec.email = ["anthonyeden@gmail.com", "scashin133@gmail.com", "elise@elisehuard.be"]
-    gemspec.homepage = "http://github.com/aeden/rsaml"
-    gemspec.authors = ["Anthony Eden"]
+    gemspec.email = ["anthonyeden@gmail.com", "nospam@nikosd.com", "scashin133@gmail.com", "elise@elisehuard.be"]
+    gemspec.homepage = "http://github.com/rsaml/rsaml"
+    gemspec.authors = ["Anthony Eden", "Nikos Dimitrakopoulos"]
     gemspec.add_dependency('activesupport', '>=2.3.4')
     gemspec.add_dependency('uuid', '>=2.1.1')
+    gemspec.add_dependency('macaddr', '>=1.5.0') # Explicitly require > 1.5 for better 1.9.3 compatibility
     gemspec.add_dependency('builder')
     gemspec.add_development_dependency('rake')
     gemspec.add_development_dependency('jeweler')
@@ -72,7 +51,6 @@ begin
 rescue LoadError
   puts "Jeweler not available.  Install it with: gem install jeweler"
 end
-
 
 desc 'Default: run unit tests.'
 task :default => :test
